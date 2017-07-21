@@ -1,15 +1,11 @@
 import requests
 try: 
-    import bs4 as BeautifulSoup #python3
-    version = 3
-except ImportError:
     import BeautifulSoup #python2
     version = 2
+except ImportError:
+    import bs4 as BeautifulSoup #python3
+    version = 3
 
-# options for options:
-# general -- name/email
-# phone -- reverse lookup (10 digits)
-# lastnamesx -- lastname sounds like
 def get_people(query, options="general", recurse=False):
     """Accesses the MIT People Directory
 
