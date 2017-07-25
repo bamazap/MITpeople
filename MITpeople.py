@@ -60,11 +60,11 @@ def get_people(query, options="general", recurse=False):
     for content in payload.contents:
         user_dict = {}
         if isinstance(content, BeautifulSoup.Tag):
-            user_dict["email"] = content.contents[0]
+            user_dict[u"email"] = content.contents[0]
         else:
             for field_val in map(lambda s: s.strip(), content.split("\n")):
                 if not (field_val == "" or field_val.startswith("email:")):
-                    field, val = field_val.split(' ', 1)
+                    field, val = field_val.split(': ', 1)
                     user_dict[field] = val.strip()
         output.append(user_dict)
     return output
