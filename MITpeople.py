@@ -53,12 +53,12 @@ def get_people(query, options="general", recurse=False):
                 if recurse:
                     raise NotImplementedError #TODO
                 else:
-                    output.append({"name": a.contents})
+                    output.append({"name": a.contents[0]})
             return output
 
     # case 3: one match
+    user_dict = {}
     for content in payload.contents:
-        user_dict = {}
         if isinstance(content, BeautifulSoup.Tag):
             user_dict[u"email"] = content.contents[0]
         else:
@@ -66,5 +66,5 @@ def get_people(query, options="general", recurse=False):
                 if not (field_val == "" or field_val.startswith("email:")):
                     field, val = field_val.split(': ', 1)
                     user_dict[field] = val.strip()
-        output.append(user_dict)
+    output.append(user_dict)
     return output
