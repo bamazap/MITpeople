@@ -1,5 +1,4 @@
 import argparse
-import sys
 from MITpeople import get_people
 
 parser = argparse.ArgumentParser(description="Access the MIT People Directory")

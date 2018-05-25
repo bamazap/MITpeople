@@ -23,7 +23,6 @@ def get_people(query, options="general", recurse=False):
         list: The people found.
             Each element is a dictionary containing the person's details.
             The dictionary will at least contain a "name" field.
-
     """
 
     url = "http://web.mit.edu/bin/cgicso?options="+options+"&query="+query
@@ -54,13 +53,19 @@ def get_people(query, options="general", recurse=False):
 
     # case 3: one match
     user_dict = {}
+    field = u""
+    val = u""
     for content in payload.contents:
         if isinstance(content, BeautifulSoup.Tag):
-            user_dict[u"email"] = content.contents[0]
+            val = content.contents[0]
+            user_dict[field] = val.strip()
         else:
             for field_val in map(lambda s: s.strip(), content.split("\n")):
-                if not (field_val == "" or field_val.startswith("email:")):
-                    field, val = field_val.split(': ', 1)
-                    user_dict[field] = val.strip()
+                if field_val != "":
+                    split_field_val = field_val.split(': ', 1)
+                    field = split_field_val[0]
+                    if len(split_field_val) > 1:
+                        val = split_field_val[1]
+                        user_dict[field] = val.strip()
     output.append(user_dict)
     return output
