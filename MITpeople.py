@@ -47,6 +47,8 @@ def get_people_by_url(url, recurse=False):
                 if field_val != "":
                     split_field_val = field_val.split(': ', 1)
                     field = split_field_val[0]
+                    if field[-1] == ":":
+                        field = field[:-1]
                     if len(split_field_val) > 1:
                         val = split_field_val[1]
                         user_dict[field] = val.strip()
